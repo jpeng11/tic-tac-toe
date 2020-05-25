@@ -1,9 +1,4 @@
-const color = {
-  "1": "blue",
-  "-1": "green",
-  null: "white",
-};
-
+/*----- constants -----*/
 const winCombo = [
   [0, 1, 2],
   [3, 4, 5],
@@ -15,28 +10,44 @@ const winCombo = [
   [2, 4, 6],
 ];
 
-let turn, winner, tie;
+/*----- app's state (variables) -----*/
+let winner;
+// Set default board to empty
+let board = ["", "", "", "", "", "", "", "", ""];
+// Set first player to X
+let turn = "X";
 
-const startGame = () => {
-  let h1El = document.querySelector("span");
-  h1El.textContent = "Please Lorem Ipsum is simply dummy";
-  this.turn = "1";
-  this.tie = false;
-  this.winner = null;
-};
+/*----- cached element references -----*/
+const msg = document.querySelector("span");
+const squares = document.querySelector(".grid-container");
+const cell = document.querySelectorAll("cell");
 
-var cell1 = document.querySelector(".cell1");
-cell1.addEventListener("click", function () {
-  cell1.innerHTML = "<img src='image/x.jpg'>";
-});
-var cell2 = document.querySelector(".cell2");
-cell2.addEventListener("click", function () {
-  cell2.innerHTML = "<img src='image/o.png'>";
-});
+/*----- event listeners -----*/
+squares.addEventListener("click", handleClick);
+document.querySelector("button").addEventListener("click", initialize);
 
-const game = () => {
-  startGame();
-  return;
-};
+/*----- functions -----*/
+function handleClick(e) {
+  // Get pre-set index from clicked element
+  let clickSq = e.target;
+  let sqIdx = parseInt(clickSq.getAttribute("cellIdx"));
+  if (board[sqIdx] !== "") {
+    return;
+  }
+  board[sqIdx] = turn;
+  clickSq.innerHTML = turn;
+  turn = turn === "X" ? "O" : "X";
+  winner = getWinner();
+}
 
-game();
+function getWinner() {}
+function render() {}
+function initialize() {
+  cell.forEach(function (cell) {
+    cell.innerHTML = "";
+  });
+  document.turn = "X";
+  winner = null;
+}
+
+handleClick;
